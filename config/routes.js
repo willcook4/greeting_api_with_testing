@@ -23,6 +23,7 @@ app.get('/', (req, res, next) => {
 })
 
 app.use('/', require('../controllers/greetings.js'))
+app.use('/', require('../controllers/goodbyes.js'))
 
 /**
  * PRIVATE Endpoints
