@@ -30,7 +30,7 @@ describe('JWT testing', () => {
     done()
   })
 
-  test('Generated JSON Web Tokens can be validated to return the validity, expiry, issued-at, site-id and useruuid', async function(done){
+  test('Generated JSON Web Tokens can be validated to return the validity(vaild), expiry(exp), issued-at(iat), site-id(site) and useruuid', async function(done){
     let testUser = { // testing data
       uuid: 'b087db98-99ef-490e-b93b-c6c56a9f7a6d'
     }
@@ -42,7 +42,7 @@ describe('JWT testing', () => {
     done()
   })
 
-  test('Generated JSON Web Tokens are marked as valid false if they have expired ', async function(done){
+  test('Generated JSON Web Tokens are validated as false if they have expired ', async function(done) {
     let testUser = {
       uuid: 'b087db98-99ef-490e-b93b-c6c56a9f7a6d'
     }
@@ -69,6 +69,18 @@ describe('JWT testing', () => {
       expect(validatedToken.valid).to.be.false
       done()
     }, 1100);
+  })
+
+  test('Generated JSON Web Tokens are generated with the iat before the expiry', async function(done) {
+    let testUser = {
+      uuid: 'b087db98-99ef-490e-b93b-c6c56a9f7a6d'
+    }
+
+    let generatedToken = generateToken(testUser, '1h') // expire in an hour, iat: +2hr
+    let validatedToken = validateToken(generatedToken)
+
+    expect(validatedToken.iat).to.be.below(validateToken.exp)
+    done()
   })
 })
   
