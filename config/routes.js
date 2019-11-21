@@ -6,8 +6,7 @@ let router = express.Router()
 /**
  * Router Middleware
  */
-
- // JWT TODO
+let jwt = require('../controllers/middleware/jwt')
 
 /**
  * PUBLIC Endpoints
